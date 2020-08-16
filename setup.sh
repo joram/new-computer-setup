@@ -102,8 +102,8 @@ function updatePrompt {
     fi
 
     # Current virtualenv
-    if [[ $$VIRTUAL_ENV != "" ]]; then
-        # Strip out the path and just leave the env name
+    echo virtualenv is '\$VIRTUAL_ENV'
+    if [[ \$VIRTUAL_ENV != "" ]]; then
         PROMPT="\$PROMPT\${BLUE}{\${VIRTUAL_ENV##*/}}\${RESET}"
     fi
 

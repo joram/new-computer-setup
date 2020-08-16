@@ -18,6 +18,33 @@ sudo snap install slack --classic
 git config --global user.email "john@oram.ca"
 git config --global user.name "John Oram"
 
+function setup_ssh() {
+  ssh-keygen -t rsa -b 4096 -C "john@oram.ca"
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/id_rsa
+  sudo apt install xclip -y
+  xclip -sel clip < ~/.ssh/id_rsa.pub
+  while true; do
+    echo "your ssh pub key is on your clipboard"
+    echo "please go here, and add it: https://github.com/settings/keys"
+    read -p "Have you setup the key? (y/n)" yn
+    case $yn in
+        [Yy]* ) make install; break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+  done
+
+}
+
+while true; do
+  read -p "Do you wish to setup an ssh key (for github)? (y/n)" yn
+  case $yn in
+    [Yy]* ) setup_ssh; break;;
+    [Nn]* ) break;;
+    * ) echo "Please answer yes or no.";;
+  esac
+done
 
 rm ~/.bashrc_john
 
@@ -102,7 +129,6 @@ function updatePrompt {
     fi
 
     # Current virtualenv
-    echo virtualenv is '\$VIRTUAL_ENV'
     if [[ \$VIRTUAL_ENV != "" ]]; then
         PROMPT="\$PROMPT\${BLUE}{\${VIRTUAL_ENV##*/}}\${RESET}"
     fi

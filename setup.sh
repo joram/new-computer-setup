@@ -11,6 +11,7 @@ apt install -y google-chrome-stable
 sudo apt install vim -y
 sudo snap install pycharm-professional --classic
 sudo snap install goland --classic
+sudo apt install golang -y
 
 # communication
 sudo snap install slack --classic
@@ -46,6 +47,28 @@ while true; do
   esac
 done
 
+
+function install_docker() {
+  sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME") stable"
+
+  sudo apt-get update
+  sudo apt-get -y  install docker-ce docker-compose
+  sudo usermod -aG docker $USER
+}
+
+while true; do
+  read -p "Do you wish to install docker? (y/n)" yn
+  case $yn in
+    [Yy]* ) install_docker; break;;
+      [Nn]* ) break;;
+    * ) echo "Please answer yes or no.";;
+  esac
+done
+
+
+
 rm ~/.bashrc_john
 
 
@@ -53,7 +76,7 @@ setup_workon_alias() {
   user=$1
   repo=$2
   repo_safe=$(sed 's/-/_/g' <<< "$repo")
-  pyenv=$3
+  env=$3
   version=$4
 
   code_dir=~/code/
@@ -61,19 +84,41 @@ setup_workon_alias() {
     mkdir $code_dir
   fi
 
-  user_dir=~/code/$user
-  if [ ! -d "$user_dir" ]; then
-    mkdir "$user_dir"
-  fi
+  if [ "$env" == "go" ]; then
+    code_dir=~/code/src
+    if [ ! -d "$code_dir" ]; then
+      mkdir $code_dir
+    fi
+    code_dir=~/code/src/github
+    if [ ! -d "$code_dir" ]; then
+      mkdir $code_dir
+    fi
+    code_dir=~/code/src/github/$user
+    if [ ! -d "$code_dir" ]; then
+      mkdir $code_dir
+    fi
 
-  repo_dir=~/code/$user/$repo
-  if [ ! -d "$repo_dir" ]; then
-    cd "$user_dir" || exit
-    git clone git://github.com/"$user"/"$repo".git
+    repo_dir=~/code/src/github/$user/$repo
+    if [ ! -d "$repo_dir" ]; then
+      cd ~/code/src/github/$user || exit
+      git clone git@github.com:"$user"/"$repo".git
+    fi
+
+  else
+    user_dir=~/code/$user
+    if [ ! -d "$user_dir" ]; then
+      mkdir "$user_dir"
+    fi
+
+    repo_dir=~/code/$user/$repo
+    if [ ! -d "$repo_dir" ]; then
+      cd "$user_dir" || exit
+      git clone git@github.com/"$user"/"$repo".git
+    fi
   fi
 
   alias_line="alias workon_$repo_safe='cd $repo_dir; pyenv deactivate'"
-  if [ "$pyenv" == "pyenv" ]; then
+  if [ "$env" == "pyenv" ]; then
     sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
     xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
@@ -83,6 +128,7 @@ setup_workon_alias() {
     alias_line="alias workon_$repo_safe='cd $repo_dir; pyenv activate $repo'"
   fi
 
+  echo $alias_line
   add_line_to_bashrc_john "$alias_line"
 
 
@@ -142,7 +188,7 @@ export PROMPT_COMMAND='updatePrompt'
 EOT
 
 
-setup_workon_alias joram jsnek
+setup_workon_alias joram jsnek go
 setup_workon_alias joram whatisthisapictureof pyenv 3.8.5
 setup_workon_alias joram new-computer-setup
 

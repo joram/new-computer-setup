@@ -11,6 +11,7 @@ apt install -y google-chrome-stable
 sudo apt install vim -y
 sudo snap install pycharm-professional --classic
 sudo snap install goland --classic
+sudo snap install slack --classic
 sudo apt install golang -y
 
 # communication
@@ -113,7 +114,7 @@ setup_workon_alias() {
     repo_dir=~/code/$user/$repo
     if [ ! -d "$repo_dir" ]; then
       cd "$user_dir" || exit
-      git clone git@github.com/"$user"/"$repo".git
+      git clone git@github.com:"$user"/"$repo".git
     fi
   fi
 
@@ -188,8 +189,8 @@ export PROMPT_COMMAND='updatePrompt'
 EOT
 
 
-setup_workon_alias joram jsnek go
-setup_workon_alias joram whatisthisapictureof pyenv 3.8.5
 setup_workon_alias joram new-computer-setup
+setup_workon_alias certn api_server
+setup_workon_alias certn certn_deps
 
 source ~/.bashrc_john

@@ -1,11 +1,23 @@
-#sudo apt update
-#sudo apt upgrade -y
+sudo apt update
+sudo apt upgrade -y
 sudo rm /etc/apt/preferences.d/nosnap.pref
 sudo apt install git snapd snapd-xdg-open -y
-sudo apt install zlib1g-dev
+sudo apt install zlib1g-dev -y
+sudo apt install postgresql-client -y
 
 # browsers
-apt install -y google-chrome-stable
+function install_chrome(){
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  sudo dpkg -i google-chrome-stable_current_amd64.deb
+}
+while true; do
+  read -p "Do you wish to install google chrome? (y/N)" yn
+  case $yn in
+    [Yy]* ) install_chrome; break;;
+    [Nn]* ) break;;
+    * ) break;;
+  esac
+done
 
 # editors
 sudo apt install vim -y
@@ -29,22 +41,37 @@ function setup_ssh() {
   while true; do
     echo "your ssh pub key is on your clipboard"
     echo "please go here, and add it: https://github.com/settings/keys"
-    read -p "Have you setup the key? (y/n)" yn
+    read -p "Have you setup the key? (y/N)" yn
     case $yn in
         [Yy]* ) make install; break;;
         [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
+        * ) break;;
     esac
   done
 
 }
 
 while true; do
-  read -p "Do you wish to setup an ssh key (for github)? (y/n)" yn
+  read -p "Do you wish to setup an ssh key (for github)? (y/N)" yn
   case $yn in
     [Yy]* ) setup_ssh; break;;
     [Nn]* ) break;;
-    * ) echo "Please answer yes or no.";;
+    * ) break;;
+  esac
+done
+
+function install_aws_cli(){
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip awscliv2.zip
+  sudo ./aws/install
+}
+
+while true; do
+  read -p "Do you wish to setup the aws cli? (y/N)" yn
+  case $yn in
+    [Yy]* ) install_aws_cli; break;;
+    [Nn]* ) break;;
+    * ) break;;
   esac
 done
 
@@ -63,11 +90,11 @@ function install_docker() {
 }
 
 while true; do
-  read -p "Do you wish to install docker? (y/n)" yn
+  read -p "Do you wish to install docker? (y/N)" yn
   case $yn in
     [Yy]* ) install_docker; break;;
-      [Nn]* ) break;;
-    * ) echo "Please answer yes or no.";;
+    [Nn]* ) break;;
+    * ) break;;
   esac
 done
 
@@ -193,7 +220,14 @@ EOT
 
 
 setup_workon_alias joram new-computer-setup
-setup_workon_alias certn api_server
+
+# certn stuff
+setup_workon_alias certn api_server pyenv 3.6.2
+setup_workon_alias certn test_framework pyenv 3.6.2
+setup_workon_alias certn pipeline_server pyenv 3.6.2
 setup_workon_alias certn certn_deps
+
+# requires AWS_* envs
+aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 617658783590.dkr.ecr.ca-central-1.amazonaws.com
 
 source ~/.bashrc_john

@@ -25,6 +25,7 @@ sudo snap install pycharm-professional --classic
 sudo snap install goland --classic
 sudo snap install slack --classic
 sudo apt install golang -y
+sudo snap install insomnia
 
 # communication
 sudo snap install slack --classic
@@ -159,6 +160,11 @@ setup_workon_alias() {
     alias_line="alias workon_$repo_safe='cd $repo_dir; pyenv activate $repo'"
   fi
 
+  if [ "$env" == "nvm" ]; then
+    nvm install $version
+    alias_line="alias workon_$repo_safe='cd $repo_dir; nvm use $version'"
+  fi
+
   echo $alias_line
   add_line_to_bashrc_john "$alias_line"
 
@@ -220,12 +226,14 @@ EOT
 
 
 setup_workon_alias joram new-computer-setup
-
+setup_workon_alias joram whatisthisapictureof pyenv 3.8.5
 # certn stuff
 setup_workon_alias certn api_server pyenv 3.6.2
 setup_workon_alias certn test_framework pyenv 3.6.2
 setup_workon_alias certn pipeline_server pyenv 3.6.2
+setup_workon_alias certn web_server nvm 12
 setup_workon_alias certn certn_deps
+
 
 # requires AWS_* envs
 aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 617658783590.dkr.ecr.ca-central-1.amazonaws.com

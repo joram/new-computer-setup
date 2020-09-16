@@ -23,6 +23,8 @@ done
 sudo apt install vim -y
 sudo snap install pycharm-professional --classic
 sudo snap install goland --classic
+sudo snap install webstorm --classic
+
 sudo snap install slack --classic
 sudo apt install golang -y
 sudo snap install insomnia
@@ -162,7 +164,7 @@ setup_workon_alias() {
 
   if [ "$env" == "nvm" ]; then
     nvm install $version
-    alias_line="alias workon_$repo_safe='cd $repo_dir; nvm use $version'"
+    alias_line="alias workon_$repo_safe='cd $repo_dir; nvm use $version; pyenv deactivate'"
   fi
 
   echo $alias_line

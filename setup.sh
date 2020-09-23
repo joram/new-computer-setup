@@ -28,6 +28,7 @@ sudo snap install webstorm --classic
 sudo snap install slack --classic
 sudo apt install golang -y
 sudo snap install insomnia
+sudo snap install terraform
 
 # communication
 sudo snap install slack --classic
@@ -229,6 +230,7 @@ EOT
 
 setup_workon_alias joram new-computer-setup
 setup_workon_alias joram whatisthisapictureof pyenv 3.8.5
+setup_workon_alias joram homepage nvm 12
 # certn stuff
 setup_workon_alias certn api_server pyenv 3.6.2
 setup_workon_alias certn test_framework pyenv 3.6.2

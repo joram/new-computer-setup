@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 sudo apt update
 sudo apt upgrade -y
 sudo rm /etc/apt/preferences.d/nosnap.pref
@@ -228,14 +230,22 @@ export PROMPT_COMMAND='updatePrompt'
 EOT
 
 
+# personal stuff
 setup_workon_alias joram new-computer-setup
 setup_workon_alias joram whatisthisapictureof pyenv 3.8.5
+setup_workon_alias joram recipes pyenv 3.8.5
+setup_workon_alias joram steps pyenv 3.8.5
 setup_workon_alias joram homepage nvm 12
+setup_workon_alias joram jsnek
+
 # certn stuff
 setup_workon_alias certn api_server pyenv 3.6.2
 setup_workon_alias certn test_framework pyenv 3.6.2
 setup_workon_alias certn pipeline_server pyenv 3.6.2
+setup_workon_alias certn billing_server pyenv 3.8.5
 setup_workon_alias certn web_server nvm 12
+setup_workon_alias certn web_local nvm 12
+setup_workon_alias certn certn_support nvm 13.6
 setup_workon_alias certn certn_deps
 
 

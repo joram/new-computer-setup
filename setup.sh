@@ -35,75 +35,6 @@ sudo snap install terraform
 # communication
 sudo snap install slack --classic
 
-git config --global user.email "john@oram.ca"
-git config --global user.name "John Oram"
-
-function setup_ssh() {
-  ssh-keygen -t rsa -b 4096 -C "john@oram.ca"
-  eval "$(ssh-agent -s)"
-  ssh-add ~/.ssh/id_rsa
-  sudo apt install xclip -y
-  xclip -sel clip < ~/.ssh/id_rsa.pub
-  while true; do
-    echo "your ssh pub key is on your clipboard"
-    echo "please go here, and add it: https://github.com/settings/keys"
-    read -p "Have you setup the key? (y/N)" yn
-    case $yn in
-        [Yy]* ) make install; break;;
-        [Nn]* ) break;;
-        * ) break;;
-    esac
-  done
-
-}
-
-while true; do
-  read -p "Do you wish to setup an ssh key (for github)? (y/N)" yn
-  case $yn in
-    [Yy]* ) setup_ssh; break;;
-    [Nn]* ) break;;
-    * ) break;;
-  esac
-done
-
-function install_aws_cli(){
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  unzip awscliv2.zip
-  sudo ./aws/install
-}
-
-while true; do
-  read -p "Do you wish to setup the aws cli? (y/N)" yn
-  case $yn in
-    [Yy]* ) install_aws_cli; break;;
-    [Nn]* ) break;;
-    * ) break;;
-  esac
-done
-
-function install_docker() {
-  sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME") stable"
-
-  sudo apt-get update
-  sudo apt-get -y  install docker-ce docker-compose
-  sudo usermod -aG docker $USER
-
-  # docker compose
-  sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  sudo chmod +x /usr/local/bin/docker-compose
-}
-
-while true; do
-  read -p "Do you wish to install docker? (y/N)" yn
-  case $yn in
-    [Yy]* ) install_docker; break;;
-    [Nn]* ) break;;
-    * ) break;;
-  esac
-done
-
 
 
 rm ~/.bashrc_john
@@ -235,8 +166,11 @@ setup_workon_alias joram new-computer-setup
 setup_workon_alias joram whatisthisapictureof pyenv 3.8.5
 setup_workon_alias joram recipes pyenv 3.8.5
 setup_workon_alias joram steps pyenv 3.8.5
+setup_workon_alias joram hydroponics pyenv 3.8.5
 setup_workon_alias joram homepage nvm 12
 setup_workon_alias joram jsnek
+setup_workon_alias joram cnc
+setup_workon_alias joram opencam nvm 15.5.1
 
 # certn stuff
 setup_workon_alias certn api_server pyenv 3.6.2
@@ -247,6 +181,11 @@ setup_workon_alias certn web_server nvm 12
 setup_workon_alias certn web_local nvm 12
 setup_workon_alias certn certn_support nvm 13.6
 setup_workon_alias certn certn_deps
+
+add_line_to_bashrc_john "alias ssh_steps='ssh ubuntu@192.168.1.78'"
+add_line_to_bashrc_john "alias ssh_stilton='ssh john@192.168.1.221'"
+add_line_to_bashrc_john "alias ssh_cnc='ssh john@192.168.1.209'"
+add_line_to_bashrc_john "alias ssh_3dprinter='ssh ubuntu@192.168.1.199'"
 
 
 # requires AWS_* envs

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 function install_docker() {
   sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common

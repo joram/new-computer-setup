@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # 1. Install our official public software signing key
 wget -O- https://updates.signal.org/desktop/apt/keys.asc |\
   sudo apt-key add -

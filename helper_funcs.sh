@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 setup_workon_alias() {
-  user=$1
-  repo=$2
+  user="$1"
+  repo="$2"
   repo_safe=$(sed 's/-/_/g' <<< "$repo")
-  env=$3
-  version=$4
-  extra=$5
+  env="$3"
+  version="$4"
+  extra="$5"
 
   code_dir=~/code/
   if [ ! -d "$code_dir" ]; then
@@ -74,6 +74,7 @@ add_line_to_bashrc_john(){
   FILE=~/.bashrc_john
   if [[ ! -f "$FILE" ]]; then
       touch $FILE
+      chmod 755 $FILE
       source_line='source ~/.bashrc_john'
       grep -qxF "$source_line" ~/.bashrc || echo $source_line >> ~/.bashrc
   fi
@@ -81,12 +82,13 @@ add_line_to_bashrc_john(){
 }
 
 safe_git_clone(){
-  REPOSRC=$1
-  LOCALREPO=$2
-  LOCALREPO_VC_DIR=$LOCALREPO/.git
+  REPOSRC="$1"
+  LOCALREPO="$2"
+  LOCALREPO_VC_DIR="$LOCALREPO/.git"
   if [ ! -d $LOCALREPO_VC_DIR ]
   then
-    git clone $REPOSRC $LOCALREPO
+    echo "cloning $REPOSRC to $LOCALREPO"
+    git clone "$REPOSRC" "$LOCALREPO"
   else
     cd $LOCALREPO
     git pull $REPOSRC

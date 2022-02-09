@@ -1,19 +1,21 @@
 update:
 
 install_pyenv:
+	chmod 755 ~/.bashrc
+	~/.bashrc
 	apt install -y virtualenv
 	./helper_funcs.sh safe_git_clone https://github.com/pyenv/pyenv.git ~/.pyenv
-	./helper_funcs.sh safe_git_clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+	./helper_funcs.sh safe_git_clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 	./helper_funcs.sh add_line_to_bashrc_john '# pyenv with virtualenv'
-	./helper_funcs.sh add_line_to_bashrc_john 'export PYENV_ROOT="$HOME/.pyenv"'
-	./helper_funcs.sh add_line_to_bashrc_john 'export PATH="$PYENV_ROOT/bin:$PATH"'
+	./helper_funcs.sh add_line_to_bashrc_john "export PYENV_ROOT='$$HOME/.pyenv'"
+	./helper_funcs.sh add_line_to_bashrc_john 'export PATH="$$PYENV_ROOT/bin:$$PATH"'
 	./helper_funcs.sh add_line_to_bashrc_john 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
-	./helper_funcs.sh add_line_to_bashrc_john 'eval "$(pyenv init --path)"'
-	./helper_funcs.sh add_line_to_bashrc_john 'eval "$(pyenv init -)"'
-	./helper_funcs.sh add_line_to_bashrc_john 'eval "$(pyenv virtualenv-init -)"'
+	./helper_funcs.sh add_line_to_bashrc_john 'export PATH="/home/john/.pyenv/shims:$${PATH}"'
+	./helper_funcs.sh add_line_to_bashrc_john 'eval "$$(pyenv init -)"'
+	./helper_funcs.sh add_line_to_bashrc_john 'eval "$$(pyenv virtualenv-init -)"'
 	./helper_funcs.sh add_line_to_bashrc_john ''
 	./helper_funcs.sh add_line_to_bashrc_john 'export VISUAL=vim'
-	./helper_funcs.sh add_line_to_bashrc_john 'export EDITOR="$VISUAL"'
+	./helper_funcs.sh add_line_to_bashrc_john 'export EDITOR="vim"'
 #	cat <<EOT >> ~/.bashrc_john
 #		function updatePrompt {
 #			# Styles
@@ -37,6 +39,9 @@ install_pyenv:
 #		# Bash shell executes this function just before displaying the PS1 variable
 #		export PROMPT_COMMAND='updatePrompt'
 #	EOT
+remove_old_bash:
+	rm -f ~/.bashrc_john
+	#./helper_funcs.sh add_line_to_bashrc_john "#!bash"
 
 install_packages:
 	sudo apt update
@@ -66,8 +71,6 @@ install_apps:
 	./apps/chrome.sh
 
 install_repos:
-	rm -f ~/.bashrc_john
-
 	# personal stuff
 	./helper_funcs.sh setup_workon_alias joram new-computer-setup
 	./helper_funcs.sh setup_workon_alias joram whatisthisapictureof pyenv 3.8.5
@@ -85,6 +88,7 @@ install_repos:
 	./helper_funcs.sh setup_workon_alias joram triptracks pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram triptracks2 pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram news pyenv 3.9.0
+	./helper_funcs.sh setup_workon_alias joram RVSecurity pyenv 3.9.0
 
 	# certn stuff
 	./helper_funcs.sh setup_workon_alias certn api_server pyenv 3.6.2 "source dev.env"
@@ -98,7 +102,10 @@ install_repos:
 	./helper_funcs.sh setup_workon_alias certn certn_deps
 	./helper_funcs.sh setup_workon_alias certn certn-deploy pyenv 3.8.5
 	./helper_funcs.sh setup_workon_alias certn large_data_collider pyenv 3.9.0
+	./helper_funcs.sh setup_workon_alias certn canonical-data-service pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias certn certn-infrastructure
+	./helper_funcs.sh setup_workon_alias certn helm-charts
+	./helper_funcs.sh setup_workon_alias certn argocd-apps
 
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_steps='ssh ubuntu@192.168.1.78'"
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_stilton='ssh john@192.168.1.221'"
@@ -109,6 +116,7 @@ install_repos:
 end:
 	# requires AWS_* envs
 	aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 617658783590.dkr.ecr.ca-central-1.amazonaws.com
+	chmod 755 ~/.bashrc_john
 	~/.bashrc_john
 
-install_all: install_packages install_pyenv install_repos install_apps end
+install_all: remove_old_bash install_packages install_pyenv install_repos install_apps end

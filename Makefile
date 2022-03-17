@@ -88,7 +88,9 @@ install_repos:
 	./helper_funcs.sh setup_workon_alias joram triptracks pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram triptracks2 pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram news pyenv 3.9.0
-	./helper_funcs.sh setup_workon_alias joram RVSecurity pyenv 3.9.0
+	./helper_funcs.sh setup_workon_alias joram RVSecurity nvm 16.13
+	./helper_funcs.sh setup_workon_alias joram crawler-experiment pyenv 3.9.0
+	./helper_funcs.sh setup_workon_alias joram battlesnake-game-collector pyenv 3.9.0
 
 	# certn stuff
 	./helper_funcs.sh setup_workon_alias certn api_server pyenv 3.6.2 "source dev.env"
@@ -119,4 +121,4 @@ end:
 	chmod 755 ~/.bashrc_john
 	~/.bashrc_john
 
-install_all: remove_old_bash install_packages install_pyenv install_repos install_apps end
+install: remove_old_bash install_packages install_pyenv install_repos install_apps end

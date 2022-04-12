@@ -58,7 +58,6 @@ install_packages:
 	sudo snap install slack --classic
 	sudo apt install golang -y
 	sudo snap install insomnia
-	sudo snap install terraform
 
 	# communication
 	sudo snap install slack --classic
@@ -69,6 +68,7 @@ install_apps:
 	./apps/github.sh
 	./apps/signal.sh
 	./apps/chrome.sh
+	./apps/terraform.sh
 
 install_repos:
 	# personal stuff
@@ -91,6 +91,10 @@ install_repos:
 	./helper_funcs.sh setup_workon_alias joram RVSecurity nvm 16.13
 	./helper_funcs.sh setup_workon_alias joram crawler-experiment pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram battlesnake-game-collector pyenv 3.9.0
+	./helper_funcs.sh setup_workon_alias joram finances pyenv 3.9.0
+	./helper_funcs.sh setup_workon_alias joram private-python-packages-repository-experimentation pyenv 3.9.0
+	./helper_funcs.sh setup_workon_alias mkellerman dataarchive-postgres pyenv 3.10.0
+	./helper_funcs.sh setup_workon_alias mkellerman dataarchive-db pyenv 3.10.0
 
 	# certn stuff
 	./helper_funcs.sh setup_workon_alias certn api_server pyenv 3.6.2 "source dev.env"
@@ -111,6 +115,7 @@ install_repos:
 
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_steps='ssh ubuntu@192.168.1.78'"
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_stilton='ssh john@192.168.1.221'"
+	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_saintAgur='ssh john@192.168.1.222'"
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_cnc='ssh john@192.168.1.209'"
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_3dprinter='ssh ubuntu@192.168.1.199'"
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_hydroponics='ssh pi@192.168.1.90'"

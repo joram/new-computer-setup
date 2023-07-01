@@ -72,28 +72,38 @@ install_apps:
 
 install_repos:
 	# personal stuff
+
+	# Bash
 	./helper_funcs.sh setup_workon_alias joram new-computer-setup
+	./helper_funcs.sh setup_workon_alias joram cnc
+
+	# React/JS
+	./helper_funcs.sh setup_workon_alias joram homepage nvm 12
+	./helper_funcs.sh setup_workon_alias joram oram.ca nvm 16.13
+	./helper_funcs.sh setup_workon_alias joram opencam nvm 15.5.1
+	./helper_funcs.sh setup_workon_alias joram RVSecurity nvm 16.13
+
+	# Python
 	./helper_funcs.sh setup_workon_alias joram whatisthisapictureof pyenv 3.8.5
 	./helper_funcs.sh setup_workon_alias joram recipes pyenv 3.8.5
 	./helper_funcs.sh setup_workon_alias joram passwords pyenv 3.8.5
 	./helper_funcs.sh setup_workon_alias joram steps pyenv 3.8.5
 	./helper_funcs.sh setup_workon_alias joram hydroponics pyenv 3.8.5
-	./helper_funcs.sh setup_workon_alias joram homepage nvm 12
-	./helper_funcs.sh setup_workon_alias joram oram.ca nvm 16.13
-	./helper_funcs.sh setup_workon_alias joram jsnek
-	./helper_funcs.sh setup_workon_alias joram cnc
-	./helper_funcs.sh setup_workon_alias joram opencam nvm 15.5.1
 	./helper_funcs.sh setup_workon_alias joram mec_items pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram trails pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram triptracks pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram triptracks2 pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram news pyenv 3.9.0
-	./helper_funcs.sh setup_workon_alias joram RVSecurity nvm 16.13
 	./helper_funcs.sh setup_workon_alias joram crawler-experiment pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram battlesnake-game-collector pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram finances pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram private-python-packages-repository-experimentation pyenv 3.9.0
 
+	# Golang
+	./helper_funcs.sh setup_workon_alias joram jsnek
+	./helper_funcs.sh setup_workon_alias joram psql_proxy
+
+	# aliases
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_steps='ssh ubuntu@192.168.1.78'"
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_stilton='ssh john@192.168.1.221'"
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_saintAgur='ssh john@192.168.1.222'"

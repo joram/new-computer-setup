@@ -93,25 +93,6 @@ install_repos:
 	./helper_funcs.sh setup_workon_alias joram battlesnake-game-collector pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram finances pyenv 3.9.0
 	./helper_funcs.sh setup_workon_alias joram private-python-packages-repository-experimentation pyenv 3.9.0
-	./helper_funcs.sh setup_workon_alias mkellerman dataarchive-postgres pyenv 3.10.0
-	./helper_funcs.sh setup_workon_alias mkellerman dataarchive-db pyenv 3.10.0
-
-	# certn stuff
-	./helper_funcs.sh setup_workon_alias certn api_server pyenv 3.6.2 "source dev.env"
-	./helper_funcs.sh setup_workon_alias certn test_framework pyenv 3.6.2
-	./helper_funcs.sh setup_workon_alias certn pipeline_server pyenv 3.6.2
-	./helper_funcs.sh setup_workon_alias certn billing_server pyenv 3.9.0 "source dev.env"
-	./helper_funcs.sh setup_workon_alias certn pipeline_check_service_prototype pyenv 3.9.0 "source dev.env"
-	./helper_funcs.sh setup_workon_alias certn web_server nvm 12
-	./helper_funcs.sh setup_workon_alias certn web_local nvm 12
-	./helper_funcs.sh setup_workon_alias certn certn_support nvm 13.6
-	./helper_funcs.sh setup_workon_alias certn certn_deps
-	./helper_funcs.sh setup_workon_alias certn certn-deploy pyenv 3.8.5
-	./helper_funcs.sh setup_workon_alias certn large_data_collider pyenv 3.9.0
-	./helper_funcs.sh setup_workon_alias certn canonical-data-service pyenv 3.9.0
-	./helper_funcs.sh setup_workon_alias certn certn-infrastructure
-	./helper_funcs.sh setup_workon_alias certn helm-charts
-	./helper_funcs.sh setup_workon_alias certn argocd-apps
 
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_steps='ssh ubuntu@192.168.1.78'"
 	./helper_funcs.sh add_line_to_bashrc_john "alias ssh_stilton='ssh john@192.168.1.221'"

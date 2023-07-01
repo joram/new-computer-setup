@@ -8,5 +8,5 @@ apt install git
 git clone git@github.com:joram/new-computer-setup.git
 cd new-computer-setup
 # edit the file before running it
-make install_all
+make install
 ```
